@@ -10,6 +10,7 @@ from sqlalchemy import Column, Interger, String, Float
 app = Flask(__name__)
 basedir = os.path.abspath(os.path.dirname(__file__))
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'planets.db')
+db = SQLAlchemy(app)
 
 
 @app.route('/')
@@ -43,6 +44,27 @@ def url_variables(name: str, age: int):
         return jsonify(mmessage="Sorry " + name + ", you are not old enough."), 401
     else:
         return jsonify(mmessage="Welcome " + name + ", you are old enough.")
+
+
+# database models
+class User(db.Model):
+    __tablenamme__ = 'users'
+    id = Column(Interger, primary_key=True)
+    first_name = Column(String)
+    last_name = Column(String)
+    email = Column(String, unique=True)
+    password=Column(String)
+
+
+class Planet(db.Model):
+    __tablenamme__ = 'planets'
+    planet_id = Column(Interger, primary_key=True)
+    planet_name = Column(String)
+    last_type = Column(String)
+    home_star = Column(String)
+    mass = Column(Float)
+    radius = Column(Float)
+    distance = Column(Float)
 
 
 if __name__ == "__main__":
