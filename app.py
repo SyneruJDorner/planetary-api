@@ -1,6 +1,16 @@
+#pip install flask_sqlalchemy
+#pip install SQLAlchemy
+
+import os
 from flask import Flask, jsonify, request
+from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import Column, Interger, String, Float
+
 
 app = Flask(__name__)
+basedir = os.path.abspath(os.path.dirname(__file__))
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'planets.db')
+
 
 @app.route('/')
 def hello_world():
